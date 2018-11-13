@@ -22,3 +22,13 @@ end
 # iex> flush()
 # :hello
 # :ok
+
+
+
+#该进程在失败时把它的父进程也弄停止了，因为它们是链接的。
+spawn_link fn -> raise "oops" end
+
+receive do
+  :hello -> "let's wait untill the process fails"
+
+end
