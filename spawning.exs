@@ -26,7 +26,21 @@ end
 
 
 #该进程在失败时把它的父进程也弄停止了，因为它们是链接的。
-spawn_link fn -> raise "oops" end
+
+
+# spawn_link fn -> raise "oops" end
+#
+# receive do
+#   :hello -> "let's wait untill the process fails"
+#
+# end
+
+
+
+# 任务建立在进程派生函数之上，提供了更好的错误报告和内省。
+# 使用Task.start/1和Task.start_link/1代替spawn/1和spawn_link/1， 返回{:ok pid}而不仅仅是子进程的PID。这使得任务可以在监督者树中使用
+
+Task.start  fn -> raise "oops" end
 
 receive do
   :hello -> "let's wait untill the process fails"
